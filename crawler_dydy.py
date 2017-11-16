@@ -4,8 +4,8 @@
 """
 這是爬取網站 http://www.dysfz.cc/ 的爬蟲
 是專門用以抓取裡面提供的磁力與驢子的鏈結
-使用前須先創造一個 seed_list_lib.txt 做為種子庫使用 (與程式檔放同一個folder)
-因為是簡體中文，一直存有encoding的問題，無解阿~~
+第一次使用前須先創造一個 seed_list_lib.txt 做為種子庫使用 (與程式檔放同一個folder)
+因為是簡體中文，Windows的Command line假如有改encoding，就可以正常顯示文字(Linux 則是終端機的encoding要改)
 此爬蟲一日使用一次，假如要當日連續使用，請每次執行時，先移除 movie_list_xxxx.csv, seed_list_xxxxx.csv, seed_list_xxxxx.txt, seed_list_new_xxxxx.txt,
 """
 
