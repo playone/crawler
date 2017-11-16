@@ -25,6 +25,14 @@ seedlistfilename_csv = 'seed_list_'+time.strftime('%Y%m%d')+'.csv' #此檔會依
 seedlistfilename_txt = 'seed_list_'+time.strftime('%Y%m%d')+'.txt' #此檔會依日期生成，存放當日爬取的種子名單，以TXT存放
 seednewfilename = 'seed_list_new_'+time.strftime('%Y%m%d')+'.txt' #此檔會依日期生成，存放當日爬取的未寫入種子庫的種子名單，以TXT存放
 
+"""
+moviefilename 這檔案是給程式作參考使用，會利用裡面存取的名單一次爬取網頁裡面所有種子連結
+seedlistfilename_csv 這檔案是給使用者比對使用，會將網頁與網頁裡內含的種子寫在檔案裡面
+seedlistfilename_txt 存放當日爬取的種子名單，程式參考用。
+seednewfilename 存放當日爬取的未寫入種子庫的種子名單，可直接利用於下載流程。
+"""
+
+
 for i in range(1, pages+1):
     res = get('http://www.dysfz.cc/' + str(i)+ '?o=2')
     soup = BeautifulSoup(res.text, 'html.parser')
