@@ -4,8 +4,10 @@
 """
 這是爬取網站 http://www.dysfz.cc/ 的爬蟲
 是專門用以抓取裡面提供的磁力與驢子的鏈結
-第一次使用前須先創造一個 seed_list_lib.txt 做為種子庫使用 (與程式檔放同一個folder)
-因為是簡體中文，Windows的Command line假如有改encoding，就可以正常顯示文字(Linux 則是終端機的encoding要改)
+第一次使用前須先創造一個 seed_list_lib.txt 做為種子庫使用 (與程式檔存放在同一個folder)
+此網頁是簡體中文，Windows的Command line因為預設的編碼是cp950，所以會顯示亂碼，
+解決方法是換enoding為utf-8 ，指令是: chcp 65001，就可以正常顯示文字(Linux 則是終端機的預設編碼就是utf-8，所以應該不會有這問題)
+(PS. 我還沒試過解決方法，所以有興趣的試看看的人可以試看看結果如何)
 此爬蟲一日使用一次，假如要當日連續使用，請每次執行時，先移除 movie_list_xxxx.csv, seed_list_xxxxx.csv, seed_list_xxxxx.txt, seed_list_new_xxxxx.txt,
 """
 
