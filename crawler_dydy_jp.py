@@ -48,7 +48,7 @@ seednewfilename 存放當日爬取的未寫入種子庫的種子名單，可直�
 
 
 for i in range(1, pages+1):
-    res = get('http://www.dysfz.cc/key/2017%E7%A7%8B%E5%AD%A3%E6%97%A5%E5%89%A7/' + str(i)+ '?o=2')
+    res = get('http://www.dysfz.cc/key/2017%E7%A7%8B%E5%AD%A3%E6%97%A5%E5%89%A7/' + str(i)+ '?o=2') #換關鍵字的話記得更換此行的網址
     soup = BeautifulSoup(res.text, 'html.parser')
 
     for title in soup.select('[target=_blank]'):
