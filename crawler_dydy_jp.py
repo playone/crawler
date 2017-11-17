@@ -19,14 +19,14 @@ import time
 reload(sys)
 sys.setdefaultencoding('utf8') #宣告預設的encoding是utf-8
 
-jpres = get('http://www.dysfz.cc/key/2017%E7%A7%8B%E5%AD%A3%E6%97%A5%E5%89%A7/1?o=2')  #關鍵字是"2017秋季日劇"
-jpsoup = BeautifulSoup(jpres.text, 'html.parser')
+keyres = get('http://www.dysfz.cc/key/2017%E7%A7%8B%E5%AD%A3%E6%97%A5%E5%89%A7/1?o=2')  #關鍵字是"2017秋季日劇"
+keysoup = BeautifulSoup(keyres.text, 'html.parser')
 
-for jptitle in jpsoup.select('.last'):
-    jpurl = str(jptitle.get('href'))
+for keytitle in keysoup.select('.last'):
+    keyurl = str(keytitle.get('href'))
 
-jpurl = jpurl.split('/')
-temp = jpurl[-1]
+keyurl = keyurl.split('/')
+temp = keyurl[-1]
 temp = temp.split('?')
 pages = int(temp[0])
 print pages
