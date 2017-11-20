@@ -35,6 +35,13 @@ seednewfilename 存放當日爬取的未寫入種子庫的種子名單，可直�
 
 
 def make_movielist(pages = pages, crewler_url = crewler_url, moviefilename = moviefilename):
+    """
+    以pages為爬取範圍，在範圍內爬取可用的電影網頁連結。會產生一個檔案moviefilename，檔名要在使用此方法前定義好
+    :param pages: 定義想爬取的網頁頁數。在使用此方法前自行定義，或利用key_page()所得到的值。
+    :param crewler_url: 定義爬取的網址，需在使用此方法前定義好。
+    :param moviefilename: 定義檔名。存放爬取到的電影網址的檔名。檔名需在使用此方法前定義好。
+    :return: none
+    """
     for i in range(1, pages+1):
         res = get(crewler_url + str(i) + '?o=2')
         soup = BeautifulSoup(res.text, 'html.parser')
@@ -49,6 +56,13 @@ def make_movielist(pages = pages, crewler_url = crewler_url, moviefilename = mov
                     movielist.close()
 
 def make_seedlist(moviefilename = moviefilename, seedlistfilename_csv = seedlistfilename_csv, seedlistfilename_txt = seedlistfilename_txt):
+    """
+    爬取電影連結裡每個可用的seed link，會產生兩個檔案，seedlistfilename_csv和seedlistfilename_txt。檔名需在使用此方法前定義好
+    :param moviefilename: 存放爬取到的電影網址的檔名，在這方法裡會被用來當作爬取的參考。
+    :param seedlistfilename_csv: 定義檔名。此csv檔會存放爬取到的電影網址和種子鏈結，可以讓使用者作參照用。檔名需在使用此方法前定義好。
+    :param seedlistfilename_txt: 定義檔名。此txt檔存放爬取到的所有種子連結。檔名需在使用此方法前定義好。
+    :return: none
+    """
     movie_a = [line.strip() for line in open(moviefilename)] #將連結檔案內容轉存list，提供給爬取種子使用
 
     for li in movie_a:
@@ -81,6 +95,14 @@ def make_seedlist(moviefilename = moviefilename, seedlistfilename_csv = seedlist
                     seedlist2.close()
 
 def defineseedlist(seedlistfilename_txt = seedlistfilename_txt, seedlibfilename = seedlibfilename, seednewfilename = seednewfilename):
+    """
+    此方法會挑選出還未使用過的種子連結，並將之寫存在seednewfilename和回存到seedlibfilename。seednewfilename可利用於之後的下載流程
+    :param seedlistfilename_txt: 定義檔名。此txt檔存放爬取到的所有種子連結。在此方法被拿來比較參照用。
+    :param seedlibfilename: 定義檔名。此txt檔是種子庫，存放所有已使用過的種子連結。將會被用於和seedlistfilename_txt比較，挑選出還未使用過的種子連結。
+    :param seednewfilename: 定義檔名。此txt檔存放還未使用的種子連結。會於之後的下載流程做使用。
+    :return: none
+    """
+
     #將當日爬取到的種子列表與種子庫分別轉存list，作為轉換成set使用
     seed_a = [line.strip() for line in open(seedlistfilename_txt)]
     seed_lib = [line.strip() for line in open(seedlibfilename)]
@@ -107,7 +129,12 @@ def defineseedlist(seedlistfilename_txt = seedlistfilename_txt, seedlibfilename 
             seedfilelib.write(list_new + '\n')
             seedfilelib.close()
 
-def key_page(crewler_url = crewler_url): #提取頁數的做法。關鍵字搜尋之後，它有一定頁數，因此用這方法來提取準確頁數，以利接下來的網頁爬蟲。
+def key_page(crewler_url = crewler_url):
+    """
+    提取頁數的做法。關鍵字搜尋之後，它有一定頁數，因此用這方法來提取準確頁數，以利接下來的網頁爬蟲。
+    :param crewler_url: 想要爬取的網址
+    :return: pages。可在於方法make_movielist()做使用。
+    """
     keyres = get(crewler_url)  #關鍵字搜尋結果網頁
     keysoup = BeautifulSoup(keyres.text, 'html.parser')
 
