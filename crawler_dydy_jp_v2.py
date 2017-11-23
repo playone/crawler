@@ -11,8 +11,6 @@
 此爬蟲一日使用一次，假如要當日連續使用，請每次執行時，先移除 movie_list_xxxx.csv, seed_list_xxxxx.csv, seed_list_xxxxx.txt, seed_list_new_xxxxx.txt,
 """
 
-from requests import *
-from bs4 import BeautifulSoup
 import sys
 import time
 import crawler_dydy_v2
