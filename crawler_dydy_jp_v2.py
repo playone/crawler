@@ -20,10 +20,10 @@ sys.setdefaultencoding('utf8') #宣告預設的encoding是utf-8
 
 
 crewler_url = 'http://www.dysfz.cc/key/2017%E7%A7%8B%E5%AD%A3%E6%97%A5%E5%89%A7/' #關鍵字搜尋頁面網址，關鍵字是: 2017秋季日剧 (簡體字)
-moviefilename = 'jpdrama_list_'+time.strftime('%Y%m%d')+'.csv' #此檔會依日期生成，存放當日爬取的電影網頁名單，以CSV存放
-seedlistfilename_csv = 'jpdrama_seed_list_'+time.strftime('%Y%m%d')+'.csv' #此檔會依日期生成，存放當日爬取的電影網頁和種子名單，以CSV存放
-seedlistfilename_txt = 'jpdrama_seed_list_'+time.strftime('%Y%m%d')+'.txt' #此檔會依日期生成，存放當日爬取的種子名單，以TXT存放
-seednewfilename = 'jpdrama_seed_list_new_'+time.strftime('%Y%m%d')+'.txt' #此檔會依日期生成，存放當日爬取的未寫入種子庫的種子名單，以TXT存放
+moviefilename = 'dydylist\jpdrama_list_'+time.strftime('%Y%m%d')+'.csv' #此檔會依日期生成，存放當日爬取的電影網頁名單，以CSV存放
+seedlistfilename_csv = 'dydylist\jpdrama_seed_list_'+time.strftime('%Y%m%d')+'.csv' #此檔會依日期生成，存放當日爬取的電影網頁和種子名單，以CSV存放
+seedlistfilename_txt = 'dydylist\jpdrama_seed_list_'+time.strftime('%Y%m%d')+'.txt' #此檔會依日期生成，存放當日爬取的種子名單，以TXT存放
+seednewfilename = 'dydylist\jpdrama_seed_list_new_'+time.strftime('%Y%m%d')+'.txt' #此檔會依日期生成，存放當日爬取的未寫入種子庫的種子名單，以TXT存放
 seedlibfilename = 'seed_list_lib.txt' #存放爬取過的種子名單。重要! 不可隨意更改檔名與內容。
 
 pages = crawler_dydy_v2.key_page(crewler_url) #呼叫key_page來幫忙抓取頁數

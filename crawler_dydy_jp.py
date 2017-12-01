@@ -33,10 +33,10 @@ print pages
 #以上是提取頁數的做法。關鍵字搜尋之後，它有一定頁數，因此用以上方法來提取準確頁數，以利接下來的網頁爬蟲。
 
 #pages=10 #爬取 10頁
-moviefilename = 'jpdrama_list_'+time.strftime('%Y%m%d')+'.csv' #此檔會依日期生成，存放當日爬取的電影網頁名單，以CSV存放
-seedlistfilename_csv = 'jpdrama_seed_list_'+time.strftime('%Y%m%d')+'.csv' #此檔會依日期生成，存放當日爬取的電影網頁和種子名單，以CSV存放
-seedlistfilename_txt = 'jpdrama_seed_list_'+time.strftime('%Y%m%d')+'.txt' #此檔會依日期生成，存放當日爬取的種子名單，以TXT存放
-seednewfilename = 'jpdrama_seed_list_new_'+time.strftime('%Y%m%d')+'.txt' #此檔會依日期生成，存放當日爬取的未寫入種子庫的種子名單，以TXT存放
+moviefilename = 'dydylist\jpdrama_list_'+time.strftime('%Y%m%d')+'.csv' #此檔會依日期生成，存放當日爬取的電影網頁名單，以CSV存放
+seedlistfilename_csv = 'dydylist\jpdrama_seed_list_'+time.strftime('%Y%m%d')+'.csv' #此檔會依日期生成，存放當日爬取的電影網頁和種子名單，以CSV存放
+seedlistfilename_txt = 'dydylist\jpdrama_seed_list_'+time.strftime('%Y%m%d')+'.txt' #此檔會依日期生成，存放當日爬取的種子名單，以TXT存放
+seednewfilename = 'dydylist\jpdrama_seed_list_new_'+time.strftime('%Y%m%d')+'.txt' #此檔會依日期生成，存放當日爬取的未寫入種子庫的種子名單，以TXT存放
 
 """
 以下的還是利用原本搜尋電影的code來搜尋日劇(或者你想要的關鍵字)，檔案名稱就依個人喜好修改

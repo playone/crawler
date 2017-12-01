@@ -20,10 +20,10 @@ reload(sys)
 sys.setdefaultencoding('utf8') #宣告預設的encoding是utf-8
 
 pages=10 #爬取 10頁
-moviefilename = 'movie_list_'+time.strftime('%Y%m%d')+'.csv' #此檔會依日期生成，存放當日爬取的電影網頁名單，以CSV存放
-seedlistfilename_csv = 'seed_list_'+time.strftime('%Y%m%d')+'.csv' #此檔會依日期生成，存放當日爬取的電影網頁和種子名單，以CSV存放
-seedlistfilename_txt = 'seed_list_'+time.strftime('%Y%m%d')+'.txt' #此檔會依日期生成，存放當日爬取的種子名單，以TXT存放
-seednewfilename = 'seed_list_new_'+time.strftime('%Y%m%d')+'.txt' #此檔會依日期生成，存放當日爬取的未寫入種子庫的種子名單，以TXT存放
+moviefilename = 'dydylist\movie_list_'+time.strftime('%Y%m%d')+'.csv' #此檔會依日期生成，存放當日爬取的電影網頁名單，以CSV存放
+seedlistfilename_csv = 'dydylist\seed_list_'+time.strftime('%Y%m%d')+'.csv' #此檔會依日期生成，存放當日爬取的電影網頁和種子名單，以CSV存放
+seedlistfilename_txt = 'dydylist\seed_list_'+time.strftime('%Y%m%d')+'.txt' #此檔會依日期生成，存放當日爬取的種子名單，以TXT存放
+seednewfilename = 'dydylist\seed_list_new_'+time.strftime('%Y%m%d')+'.txt' #此檔會依日期生成，存放當日爬取的未寫入種子庫的種子名單，以TXT存放
 
 """
 moviefilename 這檔案是給程式作參考使用，會利用裡面存取的名單一次爬取網頁裡面所有種子連結
