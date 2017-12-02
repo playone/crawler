@@ -75,7 +75,7 @@ def make_seedlist(moviefilename = moviefilename, seedlistfilename_csv = seedlist
             seedlist2.close()
         for title_movie in soup_movie.select('[target=_blank]'):
             seed_link = str(title_movie.get('href'))
-
+            #print seed_link
             if 'ed2k://' in seed_link: #爬取edonkey
                 #print seed_link.decode('utf8', 'ignore')
                 print seed_link
@@ -92,6 +92,16 @@ def make_seedlist(moviefilename = moviefilename, seedlistfilename_csv = seedlist
                     seedlist.close()
                 with open(seedlistfilename_csv, 'a') as seedlist2:
                     seedlist2.write(seed_link + '\n')
+                    seedlist2.close()
+        for title_movie2 in soup_movie.select('[target=_self]'):
+            seed_link2 = str(title_movie2.get('href'))
+            if 'thunder://' in seed_link2: #爬取迅雷連結
+                print seed_link2
+                with open(seedlistfilename_txt, 'a') as seedlist: #將種子連結分別寫入csv和txt
+                    seedlist.write(seed_link2 + '\n')
+                    seedlist.close()
+                with open(seedlistfilename_csv, 'a') as seedlist2:
+                    seedlist2.write(seed_link2 + '\n')
                     seedlist2.close()
 
 def defineseedlist(seedlistfilename_txt = seedlistfilename_txt, seedlibfilename = seedlibfilename, seednewfilename = seednewfilename):
