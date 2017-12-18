@@ -70,6 +70,7 @@ def make_seedlist(moviefilename = moviefilename, seedlistfilename_csv = seedlist
         soup_movie = BeautifulSoup(res_movie.text, 'html.parser')
         print '-----------------------'
         print li
+
         with open(seedlistfilename_csv, 'a') as seedlist2:
             seedlist2.write('----------------' + '\n' + li + '\n' )
             seedlist2.close()
@@ -86,6 +87,14 @@ def make_seedlist(moviefilename = moviefilename, seedlistfilename_csv = seedlist
                     seedlist2.write(seed_link + '\n')
                     seedlist2.close()
             elif 'magnet:?' in seed_link: #爬取磁力連結
+                print seed_link
+                with open(seedlistfilename_txt, 'a') as seedlist: #將種子連結分別寫入csv和txt
+                    seedlist.write(seed_link + '\n')
+                    seedlist.close()
+                with open(seedlistfilename_csv, 'a') as seedlist2:
+                    seedlist2.write(seed_link + '\n')
+                    seedlist2.close()
+            elif 'pan.baidu.com' in seed_link: #爬取百度
                 print seed_link
                 with open(seedlistfilename_txt, 'a') as seedlist: #將種子連結分別寫入csv和txt
                     seedlist.write(seed_link + '\n')
