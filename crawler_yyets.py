@@ -51,7 +51,7 @@ def site_status(yy_favor_url = yy_favor_url, cookies = make_cookie()):
     """
     res = requests.get(yy_favor_url, cookies=cookies)
     soup = BeautifulSoup(res.text, 'html.parser')
-    for title in soup.select('[name=description]'):
+    for title in soup.select('[name=description]'): #原本想用網頁回傳的狀態碼判斷，但無法正確判斷網頁狀態。因此後來選用觀察網頁的特性，利用網頁的敘述來判斷狀態。
         key = title.get('content')
 
     if 'ZiMuZu' not in key:
