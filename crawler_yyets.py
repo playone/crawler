@@ -23,7 +23,8 @@ userseedlistfilename = 'yylist\user_seedlist_'+time.strftime('%Y%m%d')+'.txt' #�
 usered2klistfilename = 'yylist\user_ed2klist_'+time.strftime('%Y%m%d')+'.txt' #eDonkey種子清單，提供給使用者作參考用
 usermagnetlistfilename = 'yylist\user_magnetlist_'+time.strftime('%Y%m%d')+'.txt' #磁力連結清單，提供給使用者作參考用
 seedlistfilename = 'yylist\seedlist_'+time.strftime('%Y%m%d')+'.txt' #程式執行當日爬取到的種子清單，給程式做比對用
-newseedlistfilename = 'yylist\yynewseedlist_'+time.strftime('%Y%m%d')+'.txt' #比對完成之後，還未使用過的種子清單，可提供給下載程式做使用
+newseedlist_magnetfilename = 'yylist\yynew_magnet_seedlist_'+time.strftime('%Y%m%d')+'.txt' #比對完成之後，還未使用過的種子清單，可提供給下載程式做使用
+newseedlist_edonkeyfilename = 'yylist\yynew_edonkey_seedlist_'+time.strftime('%Y%m%d')+'.txt' #比對完成之後，還未使用過的種子清單，可提供給下載程式做使用
 seedlibfilename = 'seed_list_lib.txt' #存放爬取過的種子名單。重要! 不可隨意更改檔名與內容。
 raw_cookie = 'UM_distinctid=160018c89c412a-08d5769eeec2be8-4c322f7c-144000-160018c89c5119; CNZZDATA1254180690=816159804-1511853929-http%253A%252F%252Fwww.zimuzu.tv%252F%7C1511853929; help_yyets=1; PHPSESSID=57qeueg1lar3vov8uc7vq3mcq5; GINFO=uid%3D4852682%26nickname%3Dquicktimes%26group_id%3D1%26avatar_t%3Dhttp%3A%2F%2Ftu.zmzjstu.com%2Fftp%2Favatar%2Ff_noavatar_t.gif%26main_group_id%3D0%26common_group_id%3D56; GKEY=70aa7187b83ac08672bed51359ad785d'
 #raw_cookie是以我的帳號所生成的人人的登入cookies, 用以維持requests登陸網頁做使用
@@ -222,7 +223,7 @@ def make_seedlist(favorlistfilename = favorlistfilename, userseedlistfilename = 
                         seedlist.close()
 
 
-def defineseedlist(seedlistfilename = seedlistfilename, seedlibfilename = seedlibfilename, newseedlistfilename = newseedlistfilename):
+def defineseedlist(seedlistfilename = seedlistfilename, seedlibfilename = seedlibfilename, newseedlist_magnetfilename = newseedlist_magnetfilename, newseedlist_edonkeyfilename = newseedlist_edonkeyfilename):
     """
     此方法會挑選出還未使用過的種子連結，並將之寫存在seednewfilename和回存到seedlibfilename。seednewfilename可利用於之後的下載流程.
     :param seedlistfilename: 此txt檔存放爬取到的所有種子連結。在此方法被拿來比較參照用。
@@ -242,9 +243,14 @@ def defineseedlist(seedlistfilename = seedlistfilename, seedlibfilename = seedli
     seed_new = list(set_new) #set轉換成list，寫入檔案使用
 
     for list_new in seed_new:
-        with open(newseedlistfilename, 'a') as seedfilenew: #將未放入種子庫的種子寫入當日新種子檔
-            seedfilenew.write(list_new + '\n')
-            seedfilenew.close()
+        if 'magnet:' in list_new:
+            with open(newseedlist_magnetfilename, 'a') as seedfilenew: #將未放入種子庫的種子寫入當日新種子檔
+                seedfilenew.write(list_new + '\n')
+                seedfilenew.close()
+        if 'ed2k://' in list_new:
+            with open(newseedlist_edonkeyfilename, 'a') as seedfilenew2: #將未放入種子庫的種子寫入當日新種子檔
+                seedfilenew2.write(list_new + '\n')
+                seedfilenew2.close()
 
     for list_new in seed_new:
         with open(seedlibfilename, 'a') as seedfilelib: #將未放入種子庫的種子寫入種子庫
