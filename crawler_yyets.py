@@ -12,6 +12,7 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import sys
+import progressbar
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -56,9 +57,9 @@ def site_status(yy_favor_url = yy_favor_url, cookies = make_cookie()):
         key = title.get('content')
 
     if 'ZiMuZu' not in key:
-        sys.exit('網站無法存取')
+        sys.exit('Site link is failed, please check the status.')
     else:
-        print '網站可用'
+        print 'Site status is good.'
 
 
 def define_pages(yy_favor_url = yy_favor_url, cookies = make_cookie()):
@@ -68,6 +69,7 @@ def define_pages(yy_favor_url = yy_favor_url, cookies = make_cookie()):
     :param cookies: 人人的登入cookies
     :return: 判別出來的頁數
     """
+    print 'Start to define pages count'
     res = requests.get(yy_favor_url, cookies=cookies)
     soup = BeautifulSoup(res.text, 'html.parser')
     #site_status(yy_favor_url, cookies)
@@ -77,6 +79,7 @@ def define_pages(yy_favor_url = yy_favor_url, cookies = make_cookie()):
         if '...' in key:
             keytemp = key.split('.')
             pages = keytemp[-1] #pages 的type是string
+    print 'Pages define complete.'
     return pages
 
 
@@ -90,6 +93,10 @@ def make_favor_list(pages = define_pages(), yy_favor_url = yy_favor_url, favorli
     :param cookies: 人人的登入cookies
     :return: none
     """
+
+    print 'Start to crawl urls in favor list'
+    widgets = [' [', progressbar.Timer(), '] ', progressbar.Bar()]
+    bar = progressbar.ProgressBar(widgets=widgets, max_value=int(pages))
     for page in range(1, int(pages)+1):
         res = requests.get(yy_favor_url+'?page='+str(page)+'&type=all', cookies=cookies)
         soup = BeautifulSoup(res.text, 'html.parser')
@@ -104,10 +111,14 @@ def make_favor_list(pages = define_pages(), yy_favor_url = yy_favor_url, favorli
                         with open(favorlistfilename, 'a') as favor:
                             favor.write('http://www.zimuzu.tv'+source_link+'\n')
                             favor.close()
+        time.sleep(0.1)
+        bar.update(page)
+        #print 'Page'+str(page)+' is completed'
             #print block.text
-            with open(favortitlefilename, 'a') as title:
-                title.write(block.text.encode('utf-8', 'ignore')+'\n')
-                title.close()
+            #with open(favortitlefilename, 'a') as title:
+                #title.write(block.text.encode('utf-8', 'ignore')+'\n')
+                #title.close()
+    print '\n'+'Crawl urls complete.'
 
 
 def make_seedlist(favorlistfilename = favorlistfilename, userseedlistfilename = userseedlistfilename, seedlistfilename = seedlistfilename, usered2klistfilename = usered2klistfilename, usermagnetlistfilename = usermagnetlistfilename, cookies = make_cookie()):
@@ -123,14 +134,18 @@ def make_seedlist(favorlistfilename = favorlistfilename, userseedlistfilename = 
     """
     favorlist = [line.strip() for line in open(favorlistfilename)] #將爬取的種子列表轉成list
     open(favorlistfilename).close()
-
+    listcount = len(favorlist)
+    i=0
+    widgets = [' [', progressbar.Timer(), '] ', progressbar.Bar()]
+    bar = progressbar.ProgressBar(widgets=widgets, max_value=listcount)
+    print 'Start to crawl link and make list.'
     for list in favorlist:
         res = requests.get(list, cookies=cookies)
         soup = BeautifulSoup(res.text, 'html.parser')
-
-        print '------------------------------------------'
-        print soup.title.text
-        print list
+        i=i+1
+        #print '------------------------------------------'
+        #print soup.title.text
+        #print list
         with open(userseedlistfilename, 'a') as seedlist: #開啟檔案，假如檔案不存在則新增檔案
             seedlist.write('----------------------' + '\n' + list + '\n' + soup.title.text + '\n')
             seedlist.close()
@@ -145,7 +160,7 @@ def make_seedlist(favorlistfilename = favorlistfilename, userseedlistfilename = 
         以下會將爬取到的種子連結做分類，人人有提供許多下載檔案種類和下載連結種類
         在此則選取MP4和HR-HDTV這兩種檔案格式，選取eDonkey和磁力這兩種下載方法
         """
-        print '+++++++MP4+++++++'
+        #print '+++++++MP4+++++++'
         with open(userseedlistfilename, 'a') as seedlist:
             seedlist.write('+++++++MP4+++++++' + '\n')
             seedlist.close()
@@ -159,7 +174,7 @@ def make_seedlist(favorlistfilename = favorlistfilename, userseedlistfilename = 
             for block2 in block1.select('div.fr'):
                 for block3 in block2.select('[type=ed2k]'):
                     url = str(block3.get('href'))
-                    print url
+                    #print url
                     with open(userseedlistfilename, 'a') as seedlist:
                         seedlist.write(url+'\n')
                         seedlist.close()
@@ -172,7 +187,7 @@ def make_seedlist(favorlistfilename = favorlistfilename, userseedlistfilename = 
 
                 for block3 in block2.select('[type=magnet]'):
                     url = str(block3.get('href'))
-                    print url
+                    #print url
                     with open(userseedlistfilename, 'a') as seedlist:
                         seedlist.write(url+'\n')
                         seedlist.close()
@@ -183,7 +198,7 @@ def make_seedlist(favorlistfilename = favorlistfilename, userseedlistfilename = 
                         seedlist.write(url+'\n')
                         seedlist.close()
 
-        print '+++++++HR-HDTV++++++'
+        #print '+++++++HR-HDTV++++++'
         with open(userseedlistfilename, 'a') as seedlist:
             seedlist.write('+++++++HR-HDTV++++++' + '\n')
             seedlist.close()
@@ -198,7 +213,7 @@ def make_seedlist(favorlistfilename = favorlistfilename, userseedlistfilename = 
             for block6 in block5.select('div.fr'):
                 for block7 in block6.select('[type=ed2k]'):
                     url2 = str(block7.get('href'))
-                    print url2
+                    #print url2
                     with open(userseedlistfilename, 'a') as seedlist:
                         seedlist.write(url2+'\n')
                         seedlist.close()
@@ -211,7 +226,7 @@ def make_seedlist(favorlistfilename = favorlistfilename, userseedlistfilename = 
 
                 for block7 in block6.select('[type=magnet]'):
                     url2 = str(block7.get('href'))
-                    print url2
+                    #print url2
                     with open(userseedlistfilename, 'a') as seedlist:
                         seedlist.write(url2 + '\n')
                         seedlist.close()
@@ -221,6 +236,9 @@ def make_seedlist(favorlistfilename = favorlistfilename, userseedlistfilename = 
                     with open(usermagnetlistfilename, 'a') as seedlist:
                         seedlist.write(url2 + '\n')
                         seedlist.close()
+        time.sleep(0.1)
+        bar.update(i)
+    print '\n'+'Link crawling complete.'
 
 
 def defineseedlist(seedlistfilename = seedlistfilename, seedlibfilename = seedlibfilename, newseedlist_magnetfilename = newseedlist_magnetfilename, newseedlist_edonkeyfilename = newseedlist_edonkeyfilename):
@@ -231,6 +249,7 @@ def defineseedlist(seedlistfilename = seedlistfilename, seedlibfilename = seedli
     :param newseedlistfilename: 此txt檔存放還未使用的種子連結。會於之後的下載流程做使用。
     :return: none
     """
+    print 'Start to define link.'
     seed_a = [line.strip() for line in open(seedlistfilename)]
     open(seedlistfilename).close()
     seed_lib = [line.strip() for line in open(seedlibfilename)]
@@ -256,6 +275,7 @@ def defineseedlist(seedlistfilename = seedlistfilename, seedlibfilename = seedli
         with open(seedlibfilename, 'a') as seedfilelib: #將未放入種子庫的種子寫入種子庫
             seedfilelib.write(list_new + '\n')
             seedfilelib.close()
+    print 'Link define complete.'
 
 
 if __name__ == '__main__':
